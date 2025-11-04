@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MedSense | Simpler Pharmacy Support</title>
+    <meta
+      name="description"
+      content="MedSense gives patients instant pharmacy answers, refills, and live support in one chat."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-content">
+        <div class="brand" aria-label="MedSense">
+          <img src="logo.png" alt="MedSense logo" class="brand-logo" />
+          <span class="brand-name">MedSense</span>
+        </div>
+            <div class="audience-toggle" role="tablist" aria-label="Choose audience">
+                <button class="toggle-button is-active" role="tab" aria-selected="true" data-audience="patients" tabindex="0">For Patients</button>
+                <button class="toggle-button" role="tab" aria-selected="false" data-audience="pharmacies" tabindex="-1">For Pharmacies</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="hero section-shell" id="hero" tabindex="0">
+      <div class="container hero-content">
+        <div class="hero-copy-block">
+          <p class="eyebrow">Always-on care guidance</p>
+          <h1 id="hero-title">
+            Get <u><em>trusted</em></u> pharmacy answers the moment you need
+            them.
+          </h1>
+          <p class="hero-copy" id="hero-description">
+            MedSense keeps you connected to your pharmacy team for quick
+            guidance, refills, and pickup planning in one smooth chat.
+          </p>
+          <p class="hero-trust">Verified with the MedicationInfoQA dataset.</p>
+          <div
+            id="family-highlights"
+            class="family-highlights is-hidden"
+            aria-hidden="true"
+          >
+            <div class="highlight-card">
+              <h3>Trust in the system</h3>
+              <p>
+                MedSense is verified with consumer medication question dataset, with resouces curated from trusted sources from Health Canada, Official Monographs, Medline Plus + more.
+              </p>
+            </div>
+            <div class="highlight-card">
+              <h3>Seamless workflow</h3>
+              <p>
+                MedSense work seamless through conversations, with human-in-the-loop intervention.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="form-panel">
+          <form
+            class="hero-form"
+            id="patient-form"
+            action="mailto:jackma84@gmail.com"
+            method="POST"
+            enctype="text/plain"
+          >
+            <div class="field-inline">
+              <label for="name">Full name</label>
+              <div class="name-inline">
+                <img
+                  src="logo.png"
+                  alt=""
+                  class="form-logo"
+                  aria-hidden="true"
+                />
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="John Smith"
+                  required
+                />
+              </div>
+            </div>
+
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@email.com"
+              required
+            />
+
+            <button type="submit" class="cta">
+              <span class="cta-logo-wrapper" aria-hidden="true">
+                <img src="logo.png" alt="" class="cta-logo" />
+              </span>
+              <span>Save my spot</span>
+            </button>
+          </form>
+
+          <form
+            class="hero-form is-hidden"
+            id="family-form"
+            action="mailto:jackma84@gmail.com"
+            method="POST"
+            enctype="text/plain"
+          >
+            <div class="field-inline">
+                        <label for="pharmacy-contact-name">Contact name</label>
+              <div class="name-inline">
+                            <img src="logo.png" alt="" class="form-logo" aria-hidden="true">
+                            <input type="text" id="pharmacy-contact-name" name="contact_name" placeholder="Jordan Smith" required>
+              </div>
+            </div>
+
+                    <label for="pharmacy-email">Pharmacy email</label>
+                    <input type="email" id="pharmacy-email" name="email" placeholder="you@yourpharmacy.ca" required>
+
+                    <label for="pharmacy-name">Pharmacy name</label>
+                    <input type="text" id="pharmacy-name" name="pharmacy_name" placeholder="MedSense Community Pharmacy" required>
+
+            <button type="submit" class="cta">
+              <span class="cta-logo-wrapper" aria-hidden="true">
+                            <img src="logo.png" alt="" class="cta-logo">
+              </span>
+                        <span>Request pilot info</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <section
+      class="benefits section-shell"
+      aria-labelledby="benefits-title"
+      tabindex="0"
+    >
+      <div class="container">
+        <h2 id="benefits-title">What patients love about MedSense</h2>
+        <div
+          class="conversation-preview is-visible"
+          id="conversation-preview"
+          aria-live="polite"
+        ></div>
+        <ul class="benefits-list" id="benefits-list">
+          <li class="benefit-item" tabindex="0">
+            Quick reassurance for new medications, side-effects, and everyday
+            questions.
+          </li>
+          <li class="benefit-item" tabindex="0">
+            Refill prescriptions and add vitamins or wellness items without
+            waiting on hold.
+          </li>
+          <li class="benefit-item" tabindex="0">
+            Chat with MedSense anytime and your pharmacist joins when it is time
+            to make a decision.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <p>MedSesen Health Inc.&trade; 2025</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

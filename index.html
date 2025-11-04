@@ -17,9 +17,29 @@
           <img src="logo.png" alt="MedSense logo" class="brand-logo" />
           <span class="brand-name">MedSense</span>
         </div>
-            <div class="audience-toggle" role="tablist" aria-label="Choose audience">
-                <button class="toggle-button is-active" role="tab" aria-selected="true" data-audience="patients" tabindex="0">For Patients</button>
-                <button class="toggle-button" role="tab" aria-selected="false" data-audience="pharmacies" tabindex="-1">For Pharmacies</button>
+        <div
+          class="audience-toggle"
+          role="tablist"
+          aria-label="Choose audience"
+        >
+          <button
+            class="toggle-button is-active"
+            role="tab"
+            aria-selected="true"
+            data-audience="patients"
+            tabindex="0"
+          >
+            For Patients
+          </button>
+          <button
+            class="toggle-button"
+            role="tab"
+            aria-selected="false"
+            data-audience="pharmacies"
+            tabindex="-1"
+          >
+            For Pharmacies
+          </button>
         </div>
       </div>
     </header>
@@ -27,7 +47,6 @@
     <main class="hero section-shell" id="hero" tabindex="0">
       <div class="container hero-content">
         <div class="hero-copy-block">
-          <p class="eyebrow">Always-on care guidance</p>
           <h1 id="hero-title">
             Get <u><em>trusted</em></u> pharmacy answers the moment you need
             them.
@@ -38,20 +57,22 @@
           </p>
           <p class="hero-trust">Verified with the MedicationInfoQA dataset.</p>
           <div
-            id="family-highlights"
-            class="family-highlights is-hidden"
+            id="pharmacy-highlights"
+            class="pharmacy-highlights is-hidden"
             aria-hidden="true"
           >
             <div class="highlight-card">
-              <h3>Trust in the system</h3>
+              <h3>Automated Discovery &amp; Pre-Assessment</h3>
               <p>
-                MedSense is verified with consumer medication question dataset, with resouces curated from trusted sources from Health Canada, Official Monographs, Medline Plus + more.
+                AI scans for UTIs and other minor ailments, pre-assesses
+                history, and hands ready-to-sign consults to pharmacists.
               </p>
             </div>
             <div class="highlight-card">
-              <h3>Seamless workflow</h3>
+              <h3>Trusted Answers &amp; Refill Automations</h3>
               <p>
-                MedSense work seamless through conversations, with human-in-the-loop intervention.
+                Patients receive trusted answers, refill suggestions, and OTC
+                adds that route back to your pharmacy automatically.
               </p>
             </div>
           </div>
@@ -102,30 +123,53 @@
 
           <form
             class="hero-form is-hidden"
-            id="family-form"
+            id="pharmacy-form"
             action="mailto:jackma84@gmail.com"
             method="POST"
             enctype="text/plain"
           >
             <div class="field-inline">
-                        <label for="pharmacy-contact-name">Contact name</label>
+              <label for="pharmacy-contact-name">Contact name</label>
               <div class="name-inline">
-                            <img src="logo.png" alt="" class="form-logo" aria-hidden="true">
-                            <input type="text" id="pharmacy-contact-name" name="contact_name" placeholder="Jordan Smith" required>
+                <img
+                  src="logo.png"
+                  alt=""
+                  class="form-logo"
+                  aria-hidden="true"
+                />
+                <input
+                  type="text"
+                  id="pharmacy-contact-name"
+                  name="contact_name"
+                  placeholder="Jordan Smith"
+                  required
+                />
               </div>
             </div>
 
-                    <label for="pharmacy-email">Pharmacy email</label>
-                    <input type="email" id="pharmacy-email" name="email" placeholder="you@yourpharmacy.ca" required>
+            <label for="pharmacy-email">Work email</label>
+            <input
+              type="email"
+              id="pharmacy-email"
+              name="email"
+              placeholder="you@yourpharmacy.ca"
+              required
+            />
 
-                    <label for="pharmacy-name">Pharmacy name</label>
-                    <input type="text" id="pharmacy-name" name="pharmacy_name" placeholder="MedSense Community Pharmacy" required>
+            <label for="pharmacy-name">Pharmacy name</label>
+            <input
+              type="text"
+              id="pharmacy-name"
+              name="pharmacy_name"
+              placeholder="MedSense Community Pharmacy"
+              required
+            />
 
             <button type="submit" class="cta">
               <span class="cta-logo-wrapper" aria-hidden="true">
-                            <img src="logo.png" alt="" class="cta-logo">
+                <img src="logo.png" alt="" class="cta-logo" />
               </span>
-                        <span>Request pilot info</span>
+              <span>Request pilot info</span>
             </button>
           </form>
         </div>

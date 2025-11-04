@@ -70,54 +70,105 @@
                 </div>
             </div>
         `,
-        pharmacies: `
+    pharmacies: `
             <div class="preview-card">
                 <div class="preview-header">
-                    <span class="preview-heading">From symptom to actions</span>
+                    <span class="preview-heading">Minor Ailment Assessment Hand-off</span>
                 </div>
                 <div class="chat-thread" role="log" aria-live="polite">
                     <div class="chat-row patient">
                         <div class="chat-bubble patient" tabindex="0">
-                            <span class="bubble-label">You</span>
-                            <p>Hi MedSense, I have a fever and chills tonight. What can I take that is safe with my lisinopril?</p>
+                            <span class="bubble-label">Patient</span>
+                            <p>Hi MedSense, I am feeling burning when I urinate and need relief tonight. Can my pharmacist prescribe something?</p>
                         </div>
-                        <div class="avatar patient" aria-hidden="true"><span>You</span></div>
+                        <div class="avatar patient" aria-hidden="true"><span>PT</span></div>
                     </div>
                     <div class="chat-row">
                         <div class="avatar ai" aria-hidden="true"><span>AI</span></div>
                         <div class="chat-bubble medsense" tabindex="0">
                             <span class="bubble-label">MedSense AI</span>
-                            <p>Thanks for checking in, Alex. Because of your hypertension and lisinopril, stick with acetaminophen (Tylenol) for fever relief tonight. Follow the dose on the box and reach out if it pushes past 38.5°C or you feel worse.</p>
+                            <p>Hi Jamie, let’s start with your symptoms. Which of these are you experiencing right now? Select all that apply.</p>
+                        </div>
+                    </div>
+                    <div class="chat-row patient">
+                        <div class="chat-bubble patient" tabindex="0">
+                            <span class="bubble-label">Patient</span>
+                            <p>Burning when peeing and needing to go more often than usual.</p>
+                        </div>
+                        <div class="avatar patient" aria-hidden="true"><span>PT</span></div>
+                    </div>
+                    <div class="chat-row">
+                        <div class="avatar ai" aria-hidden="true"><span>AI</span></div>
+                        <div class="chat-bubble medsense" tabindex="0">
+                            <span class="bubble-label">MedSense AI</span>
+                            <p>Thanks. Are any of these complicating factors happening right now? Select all that apply—they help us decide if a pharmacist needs to step in.</p>
+                        </div>
+                    </div>
+                    <div class="chat-row patient">
+                        <div class="chat-bubble patient" tabindex="0">
+                            <span class="bubble-label">Patient</span>
+                            <p>None of those apply.</p>
+                        </div>
+                        <div class="avatar patient" aria-hidden="true"><span>PT</span></div>
+                    </div>
+                    <div class="chat-row">
+                        <div class="avatar ai" aria-hidden="true"><span>AI</span></div>
+                        <div class="chat-bubble medsense" tabindex="0">
+                            <span class="bubble-label">MedSense AI</span>
+                            <p>Thanks. Have you experienced any of these patterns with recent urinary tract infections? Select all that apply so we can confirm whether a pharmacist can prescribe safely.</p>
+                        </div>
+                    </div>
+                    <div class="chat-row patient">
+                        <div class="chat-bubble patient" tabindex="0">
+                            <span class="bubble-label">Patient</span>
+                            <p>No, this is my first infection this year.</p>
+                        </div>
+                        <div class="avatar patient" aria-hidden="true"><span>PT</span></div>
+                    </div>
+                    <div class="chat-row">
+                        <div class="avatar ai" aria-hidden="true"><span>AI</span></div>
+                        <div class="chat-bubble medsense" tabindex="0">
+                            <span class="bubble-label">MedSense AI</span>
+                            <p>Great. I am packaging this minor-ailment assessment with your history and sending it to the pharmacist for prescribing. They will join shortly with next steps.</p>
+                        </div>
+                    </div>
+                    <div class="chat-row">
+                        <div class="avatar rx" aria-hidden="true"><span>RX</span></div>
+                        <div class="chat-bubble pharmacist" tabindex="0">
+                            <span class="bubble-label">Pharmacist</span>
+                            <p>Hi Jamie, I reviewed your answers and chart. Nitrofurantoin is ready under our minor-ailment program, and I added hydration and analgesic guidance to your inbox. Let me know if you prefer pickup or delivery.</p>
                         </div>
                     </div>
                 </div>
-            </div>                    
-        `
-    };
-
-  const audienceData = {
-        pharmacies: {
-            heroTitle: '<u><em>Transform</em></u> your pharmacy with artifical intelligence.',
-            heroDescription: 'MedSense keeps everyday questions moving so your team can jump in only when it matters most.',
-            benefitsTitle: 'Why pharmacies plug in MedSense',
-      benefits: [
-                'Patients get guided answers instantly while you stay in the loop.',
-                'Refill and add-on requests arrive organized for a quick thumbs-up.',
-                'Escalations surface only the conversations that need a real human touch.'
-            ]
-        },
-        patients: {
-            heroTitle: 'Get <u><em>trusted</em></u> and <u><em>actionable</em></u> pharmacy answers the moment you need them.',
-            heroDescription: 'MedSense keeps you connected to your pharmacy team for quick guidance, refills, and pickup planning in one smooth chat.',
-            benefitsTitle: 'What patients love about MedSense',
-      benefits: [
-                'Quick reassurance for new medications, side-effects, and everyday questions.',
-                'Refill prescriptions and add vitamins or wellness items without waiting on hold.',
-                'Chat with MedSense anytime and your pharmacist joins when it is time to make a decision.'
-            ]
-        }
+            </div>
+        `,
   };
-
+  const audienceData = {
+    pharmacies: {
+      heroTitle:
+        "Deliver <u><em>trusted</em></u> guidance without stretching your counter time.",
+      heroDescription:
+        "MedSense triages minor-ailment screens, refill requests, and consultations so pharmacists focus on approvals and care moments.",
+      benefitsTitle: "Why pharmacies plug in MedSense",
+      benefits: [
+        "Automated discovery and AI-led screening surface minor-ailment consults before escalations hit the counter.",
+        "Deliver trusted answers, digital refills, and guided add-ons while automated follow-ups keep patients engaged.",
+        "Log pharmacist interventions automatically for compliance and billing.",
+      ],
+    },
+    patients: {
+      heroTitle:
+        "Get <u><em>trusted</em></u> pharmacy answers the moment you need them.",
+      heroDescription:
+        "MedSense keeps you connected to your pharmacy team for quick guidance, refills, and pickup planning in one smooth chat.",
+      benefitsTitle: "What patients love about MedSense",
+      benefits: [
+        "Quick reassurance for new medications, side-effects, and everyday questions.",
+        "Refill prescriptions and add vitamins or wellness items without waiting on hold.",
+        "Chat with MedSense anytime and your pharmacist joins when it is time to make a decision.",
+      ],
+    },
+  };
   const toggleButtons = document.querySelectorAll(".toggle-button");
   const heroTitle = document.getElementById("hero-title");
   const heroDescription = document.getElementById("hero-description");
@@ -125,8 +176,8 @@
   const benefitsList = document.getElementById("benefits-list");
   const preview = document.getElementById("conversation-preview");
   const patientForm = document.getElementById("patient-form");
-  const familyForm = document.getElementById("family-form");
-  const familyHighlights = document.getElementById("family-highlights");
+  const pharmacyForm = document.getElementById("pharmacy-form");
+  const pharmacyHighlights = document.getElementById("pharmacy-highlights");
   const toggleContainer = document.querySelector(".audience-toggle");
   const toggleIndicator = document.querySelector(".toggle-indicator");
   let indicatorFrame = null;
@@ -241,14 +292,14 @@
 
     if (audienceKey === "patients") {
       patientForm.classList.remove("is-hidden");
-      familyForm.classList.add("is-hidden");
-      familyHighlights.classList.add("is-hidden");
-      familyHighlights.setAttribute("aria-hidden", "true");
+      pharmacyForm.classList.add("is-hidden");
+      pharmacyHighlights.classList.add("is-hidden");
+      pharmacyHighlights.setAttribute("aria-hidden", "true");
     } else {
       patientForm.classList.add("is-hidden");
-      familyForm.classList.remove("is-hidden");
-      familyHighlights.classList.remove("is-hidden");
-      familyHighlights.setAttribute("aria-hidden", "false");
+      pharmacyForm.classList.remove("is-hidden");
+      pharmacyHighlights.classList.remove("is-hidden");
+      pharmacyHighlights.setAttribute("aria-hidden", "false");
     }
 
     toggleButtons.forEach((button) => {

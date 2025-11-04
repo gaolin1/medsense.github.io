@@ -95,7 +95,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 3rem;
-  align-items: center;
+  align-items: start;
 }
 
 .hero-copy-block {
@@ -106,23 +106,18 @@ body {
 .audience-toggle {
   position: relative;
   display: inline-flex;
-  align-self: center;
-  margin: 1.5rem auto 0;
-  padding: 0.5rem;
-  background: var(--color-surface);
+  padding: 0.45rem;
+  background: #050b16;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 20px 44px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 14px 28px rgba(5, 11, 22, 0.55);
   gap: 0.5rem;
   align-items: center;
-  transition:
-    box-shadow 0.55s cubic-bezier(0.19, 1, 0.22, 1),
-    transform 0.45s ease;
+  transition: box-shadow 0.55s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .audience-toggle:hover,
 .audience-toggle:focus-within {
-  box-shadow: 0 26px 56px rgba(15, 23, 42, 0.18);
+  box-shadow: 0 18px 36px rgba(5, 11, 22, 0.65);
 }
 
 .toggle-indicator {
@@ -610,7 +605,7 @@ chat-bubble.patient:focus-visible {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 3rem;
-  align-items: center;
+  align-items: start;
 }
 
 .form-panel {
@@ -622,14 +617,14 @@ chat-bubble.patient:focus-visible {
   display: none !important;
 }
 
-.family-highlights {
+.pharmacy-highlights {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.75rem;
+  margin-top: 1.5rem;
 }
 
-.family-highlights[aria-hidden="true"] {
+.pharmacy-highlights[aria-hidden="true"] {
   display: none;
 }
 

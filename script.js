@@ -146,19 +146,22 @@
   const audienceData = {
     pharmacies: {
       heroTitle:
-        "Deliver <u><em>trusted</em></u> guidance without stretching your counter time.",
+        "Deliver <strong>trusted</strong> care and transform your pharmacy practice.",
       heroDescription:
-        "MedSense triages minor-ailment screens, refill requests, and consultations so pharmacists focus on approvals and care moments.",
+        "MedSense detects minor-ailment, expanded scope opportunities, refill requests, and consultations so pharmacists focus on approvals and care moments.",
       benefitsTitle: "Why pharmacies plug in MedSense",
       benefits: [
         "Automated discovery and AI-led screening surface minor-ailment consults before escalations hit the counter.",
         "Deliver trusted answers, digital refills, and guided add-ons while automated follow-ups keep patients engaged.",
         "Log pharmacist interventions automatically for compliance and billing.",
+        "Booking appointments with patients naturally through conversations, powered by LLM.",
+        "AI scans for UTIs and other minor ailments, pre-assesses history, and hands ready-to-sign consults to pharmacists.",
+        "Patients receive trusted answers, refill suggestions, and OTC adds that route back to your pharmacy automatically.",
       ],
     },
     patients: {
       heroTitle:
-        "Get <u><em>trusted</em></u> pharmacy answers the moment you need them.",
+        "Get <strong>trusted</strong> pharmacy answers the moment you need them.",
       heroDescription:
         "MedSense keeps you connected to your pharmacy team for quick guidance, refills, and pickup planning in one smooth chat.",
       benefitsTitle: "What patients love about MedSense",
@@ -166,7 +169,8 @@
         "Quick reassurance for new medications, side-effects, and everyday questions.",
         "Refill prescriptions and add vitamins or wellness items without waiting on hold.",
         "Chat with MedSense anytime and your pharmacist joins when it is time to make a decision.",
-      ],
+        "Booking appointments with ease through conversation.",
+          ],
     },
   };
   const toggleButtons = document.querySelectorAll(".toggle-button");
@@ -174,24 +178,13 @@
   const heroDescription = document.getElementById("hero-description");
   const benefitsTitle = document.getElementById("benefits-title");
   const benefitsList = document.getElementById("benefits-list");
+  const conversationHeading = document.getElementById("conversation-heading");
   const preview = document.getElementById("conversation-preview");
   const patientForm = document.getElementById("patient-form");
   const pharmacyForm = document.getElementById("pharmacy-form");
-  const pharmacyHighlights = document.getElementById("pharmacy-highlights");
   const toggleContainer = document.querySelector(".audience-toggle");
   const toggleIndicator = document.querySelector(".toggle-indicator");
-  let indicatorFrame = null;
-  let indicatorTimeouts = [];
-
-  function clearIndicatorAnimationQueue() {
-    if (indicatorFrame !== null) {
-      cancelAnimationFrame(indicatorFrame);
-      indicatorFrame = null;
-    }
-
-    indicatorTimeouts.forEach((timeoutId) => clearTimeout(timeoutId));
-    indicatorTimeouts = [];
-  }
+  let indicatorAnimation = null;
 
   function updateToggleIndicator(activeButton) {
     if (!toggleIndicator || !toggleContainer || !activeButton) {
@@ -207,62 +200,110 @@
 
     const storedWidth = parseFloat(toggleIndicator.dataset.width || "");
     const storedTranslate = parseFloat(toggleIndicator.dataset.translate || "");
-    const previousWidth = Number.isFinite(storedWidth) ? storedWidth : newWidth;
-    const previousTranslate = Number.isFinite(storedTranslate)
+    let previousWidth = Number.isFinite(storedWidth)
+      ? storedWidth
+      : toggleIndicator.getBoundingClientRect().width;
+    if (!previousWidth || previousWidth < 1) {
+      previousWidth = newWidth;
+    }
+
+    let previousTranslate = Number.isFinite(storedTranslate)
       ? storedTranslate
-      : parseFloat(
-          toggleIndicator.style.getPropertyValue("--indicator-translate"),
-        ) || 0;
+      : 0;
 
-    toggleIndicator.dataset.width = String(newWidth);
-    toggleIndicator.dataset.translate = String(offsetLeft);
+    if (!Number.isFinite(previousTranslate)) {
+      previousTranslate = 0;
+    }
 
-    clearIndicatorAnimationQueue();
+    const currentTransform = toggleIndicator.style.transform;
+    if (!Number.isFinite(storedTranslate) && currentTransform) {
+      const match = currentTransform.match(/translateX\((-?\d+(?:\.\d+)?)px\)/);
+      if (match) {
+        previousTranslate = parseFloat(match[1]);
+      }
+    }
 
-    toggleIndicator.style.setProperty(
-      "--indicator-width",
-      `${previousWidth}px`,
+    const applyFinalState = () => {
+      toggleIndicator.style.width = `${newWidth}px`;
+      toggleIndicator.style.transform = `translateX(${offsetLeft}px) scaleX(1) scaleY(1)`;
+      toggleIndicator.dataset.width = String(newWidth);
+      toggleIndicator.dataset.translate = String(offsetLeft);
+    };
+
+    toggleIndicator.style.opacity = "1";
+    toggleIndicator.style.width = `${previousWidth}px`;
+    toggleIndicator.style.transform = `translateX(${previousTranslate}px) scaleX(1) scaleY(1)`;
+    toggleIndicator.dataset.width = String(previousWidth);
+    toggleIndicator.dataset.translate = String(previousTranslate);
+
+    if (!toggleIndicator.animate) {
+      applyFinalState();
+      return;
+    }
+
+    if (indicatorAnimation) {
+      indicatorAnimation.cancel();
+    }
+
+    const distance = Math.abs(offsetLeft - previousTranslate);
+    const midTranslate =
+      previousTranslate + (offsetLeft - previousTranslate) * 0.5;
+    const stretchWidth = Math.max(previousWidth, newWidth) + distance * 0.6;
+    const settleWidth = newWidth + 12;
+
+    indicatorAnimation = toggleIndicator.animate(
+      [
+        {
+          width: `${previousWidth}px`,
+          transform: `translateX(${previousTranslate}px) scaleX(1) scaleY(1)`,
+          offset: 0,
+        },
+        {
+          width: `${previousWidth * 0.85}px`,
+          transform: `translateX(${previousTranslate}px) scaleX(1.15) scaleY(0.85)`,
+          offset: 0.15,
+        },
+        {
+          width: `${stretchWidth}px`,
+          transform: `translateX(${midTranslate - stretchWidth * 0.15}px) scaleX(0.7) scaleY(1.35)`,
+          offset: 0.45,
+        },
+        {
+          width: `${stretchWidth * 0.9}px`,
+          transform: `translateX(${offsetLeft - newWidth * 0.1}px) scaleX(0.85) scaleY(1.2)`,
+          offset: 0.65,
+        },
+        {
+          width: `${settleWidth}px`,
+          transform: `translateX(${offsetLeft}px) scaleX(1.08) scaleY(0.92)`,
+          offset: 0.82,
+        },
+        {
+          width: `${newWidth * 0.98}px`,
+          transform: `translateX(${offsetLeft}px) scaleX(0.98) scaleY(1.02)`,
+          offset: 0.92,
+        },
+        {
+          width: `${newWidth}px`,
+          transform: `translateX(${offsetLeft}px) scaleX(1) scaleY(1)`,
+          offset: 1,
+        },
+      ],
+      {
+        duration: 650,
+        easing: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        fill: "forwards",
+      },
     );
-    toggleIndicator.style.setProperty(
-      "--indicator-translate",
-      `${previousTranslate}px`,
-    );
-    toggleIndicator.style.setProperty("--indicator-scale", "1");
-    toggleIndicator.style.setProperty("--indicator-scale-y", "1");
 
-    indicatorFrame = requestAnimationFrame(() => {
-      indicatorFrame = null;
+    indicatorAnimation.onfinish = () => {
+      applyFinalState();
+      indicatorAnimation = null;
+    };
 
-      toggleIndicator.style.setProperty("--indicator-scale", "0.88");
-      toggleIndicator.style.setProperty("--indicator-scale-y", "0.96");
-
-      indicatorTimeouts.push(
-        setTimeout(() => {
-          toggleIndicator.style.setProperty(
-            "--indicator-width",
-            `${newWidth}px`,
-          );
-          toggleIndicator.style.setProperty(
-            "--indicator-translate",
-            `${offsetLeft}px`,
-          );
-        }, 90),
-      );
-
-      indicatorTimeouts.push(
-        setTimeout(() => {
-          toggleIndicator.style.setProperty("--indicator-scale", "1.06");
-          toggleIndicator.style.setProperty("--indicator-scale-y", "1.04");
-        }, 220),
-      );
-
-      indicatorTimeouts.push(
-        setTimeout(() => {
-          toggleIndicator.style.setProperty("--indicator-scale", "1");
-          toggleIndicator.style.setProperty("--indicator-scale-y", "1");
-        }, 360),
-      );
-    });
+    indicatorAnimation.oncancel = () => {
+      indicatorAnimation = null;
+    };
   }
 
   function renderAudience(audienceKey) {
@@ -274,6 +315,9 @@
     heroTitle.innerHTML = data.heroTitle;
     heroDescription.textContent = data.heroDescription;
     benefitsTitle.textContent = data.benefitsTitle;
+    conversationHeading.textContent = audienceKey === "patients"
+      ? "See MedSense in action"
+      : "See how MedSense streamlines your workflow";
 
     preview.innerHTML = conversationPreview[audienceKey] || "";
     preview.classList.toggle(
@@ -293,13 +337,9 @@
     if (audienceKey === "patients") {
       patientForm.classList.remove("is-hidden");
       pharmacyForm.classList.add("is-hidden");
-      pharmacyHighlights.classList.add("is-hidden");
-      pharmacyHighlights.setAttribute("aria-hidden", "true");
     } else {
       patientForm.classList.add("is-hidden");
       pharmacyForm.classList.remove("is-hidden");
-      pharmacyHighlights.classList.remove("is-hidden");
-      pharmacyHighlights.setAttribute("aria-hidden", "false");
     }
 
     toggleButtons.forEach((button) => {

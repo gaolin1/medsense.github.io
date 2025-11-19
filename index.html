@@ -46,19 +46,20 @@
     </header>
 
     <main class="hero section-shell" id="hero" tabindex="0">
-      <div class="container hero-content">
-        <div class="hero-copy-block">
-          <h1 id="hero-title">
-            Get <u><em>trusted</em></u> pharmacy answers the moment you need
-            them.
-          </h1>
-          <p class="hero-copy" id="hero-description">
-            MedSense keeps you connected to your pharmacy team for quick
-            guidance, refills, and pickup planning in one smooth chat.
-          </p>
-          <p class="hero-trust">Verified with the MedicationInfoQA dataset.</p>
-        </div>
-        <div class="form-panel">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-copy-block">
+            <h1 id="hero-title">
+              Get <u><em>trusted</em></u> care the moment you need
+              them.
+            </h1>
+            <p class="hero-copy" id="hero-description">
+              MedSense keeps you connected to your pharmacy team for quick
+              guidance, refills, and pickup planning in one smooth chat.
+            </p>
+            <p class="hero-trust">Verified with the MedicationInfoQA dataset.</p>
+          </div>
+          <div class="form-panel">
           <form
             class="hero-form"
             id="patient-form"
@@ -153,31 +154,113 @@
               <span>Request pilot info</span>
             </button>
           </form>
+          </div>
         </div>
+
+        <ul class="benefits-list-fullwidth" id="benefits-list-inline">
+          <!-- Benefits will be dynamically rendered by script.js -->
+        </ul>
       </div>
     </main>
 
     <section
-      class="benefits section-shell"
-      aria-labelledby="benefits-title"
+      class="comparison section-shell"
+      aria-labelledby="comparison-title"
       tabindex="0"
+      id="comparison-section"
     >
       <div class="container">
-        <h2 id="benefits-title">What patients love about MedSense</h2>
-        <ul class="benefits-list" id="benefits-list">
-          <li class="benefit-item" tabindex="0">
-            Quick reassurance for new medications, side-effects, and everyday
-            questions.
-          </li>
-          <li class="benefit-item" tabindex="0">
-            Refill prescriptions and add vitamins or wellness items without
-            waiting on hold.
-          </li>
-          <li class="benefit-item" tabindex="0">
-            Chat with MedSense anytime and your pharmacist joins when it is time
-            to make a decision.
-          </li>
-        </ul>
+        <h2 id="comparison-title">Answers you can trust</h2>
+        <p class="comparison-description">See how MedSense seeks clarification and provides verified answers with sources, compared to unverified LLM responses.</p>
+        <div class="shared-question" id="shared-question">
+          <strong>Question:</strong> what are the milligrams for oxycodone e?
+        </div>
+        <div class="comparison-grid">
+          <div class="comparison-window unverified-window">
+            <div class="comparison-header">
+              <h3 class="comparison-heading">Unverified LLM Response</h3>
+            </div>
+            <div class="comparison-content" id="unverified-content"></div>
+          </div>
+          <div class="comparison-window verified-window">
+            <div class="comparison-header">
+              <h3 class="comparison-heading">MedSense Verified Response</h3>
+            </div>
+            <div class="comparison-content" id="verified-content"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="connection-diagram section-shell is-hidden"
+      aria-labelledby="diagram-heading"
+      tabindex="0"
+      id="connection-diagram"
+    >
+      <div class="container">
+        <div class="diagram-container">
+          <div class="bubble-diagram">
+            <div class="floating-bubble patient-bubble">
+              <div class="bubble-content">
+                <div class="bubble-label">Patient</div>
+                <div class="bubble-text">Questions, refills, appointments</div>
+              </div>
+            </div>
+
+            <div class="floating-bubble medsense-bubble">
+              <div class="bubble-content">
+                <img src="logo.png" alt="MedSense" class="bubble-logo" />
+                <div class="bubble-label bubble-label-large">MedSense</div>
+                <div class="bubble-text">Intelligent knowledge agents, assessment agents, refill agents + more</div>
+              </div>
+            </div>
+
+            <div class="floating-bubble pharmacy-bubble">
+              <div class="bubble-content">
+                <div class="bubble-label">Pharmacy</div>
+                <div class="bubble-text">Reviews, approves, delivers care</div>
+              </div>
+            </div>
+
+            <svg class="connection-arrows" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M 0 0 L 8 4 L 0 8 z" fill="#38bdf8" />
+                </marker>
+                <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M 0 0 L 8 4 L 0 8 z" fill="#1f4d3d" />
+                </marker>
+              </defs>
+              <!-- Patient to MedSense (top arc) -->
+              <path class="arrow-path arrow-blue" d="M 25% 42% Q 37.5% 25% 50% 40%" stroke="#38bdf8" stroke-width="2.5" fill="none" marker-end="url(#arrow-blue)" stroke-dasharray="6,4">
+                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1.5s" repeatCount="indefinite" />
+              </path>
+              <!-- MedSense to Patient (bottom arc) -->
+              <path class="arrow-path arrow-blue-return" d="M 50% 60% Q 37.5% 75% 25% 58%" stroke="#38bdf8" stroke-width="2.5" fill="none" marker-end="url(#arrow-blue)" stroke-dasharray="6,4" opacity="0.4">
+                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1.5s" repeatCount="indefinite" />
+              </path>
+              <!-- MedSense to Pharmacy (top arc) -->
+              <path class="arrow-path arrow-green" d="M 50% 40% Q 62.5% 25% 75% 42%" stroke="#1f4d3d" stroke-width="2.5" fill="none" marker-end="url(#arrow-green)" stroke-dasharray="6,4">
+                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1.5s" repeatCount="indefinite" />
+              </path>
+              <!-- Pharmacy to MedSense (bottom arc) -->
+              <path class="arrow-path arrow-green-return" d="M 75% 58% Q 62.5% 75% 50% 60%" stroke="#1f4d3d" stroke-width="2.5" fill="none" marker-end="url(#arrow-green)" stroke-dasharray="6,4" opacity="0.4">
+                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1.5s" repeatCount="indefinite" />
+              </path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="preview-section section-shell"
+      aria-labelledby="conversation-heading"
+      tabindex="0"
+      id="preview-section"
+    >
+      <div class="container">
         <h3 class="conversation-heading" id="conversation-heading">See MedSense in action</h3>
         <div
           class="conversation-preview is-visible"

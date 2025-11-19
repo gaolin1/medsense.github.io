@@ -12,7 +12,7 @@
   --radius-large: 32px;
   --radius-pill: 999px;
   --radius-card: 20px;
-  --container-width: min(1040px, calc(100% - 2.5rem));
+  --container-width: min(1280px, calc(100% - 5rem));
 }
 
 * {
@@ -40,10 +40,18 @@ body {
 
 .header-content {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
-  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+@media (max-width: 720px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 }
 
 .section-shell {
@@ -69,7 +77,7 @@ body {
 }
 
 .brand-name {
-  font-size: 1.35rem;
+  font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -80,7 +88,7 @@ body {
 }
 
 .hero .container {
-  padding: 2.5rem;
+  padding: 0;
 }
 
 .hero-content {
@@ -98,8 +106,6 @@ body {
 .audience-toggle {
   position: relative;
   display: inline-flex;
-  align-self: center;
-  margin: 1.75rem auto 0;
   padding: 0.45rem;
   background: var(--color-surface);
   border-radius: var(--radius-pill);
@@ -272,46 +278,388 @@ body {
 .cta {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.9rem 2rem;
+  gap: 0.6rem;
+  padding: 0.95rem 2.6rem;
   border-radius: var(--radius-pill);
-  background: var(--color-primary);
-  color: var(--color-surface);
-  text-decoration: none;
+  border: 2px solid var(--color-primary);
+  background: transparent;
+  color: var(--color-primary);
   font-weight: 600;
-  letter-spacing: 0.04em;
-  border: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
   transition:
     transform 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+  z-index: 0;
 }
 
-.cta-logo {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 6px rgba(15, 23, 42, 0.25));
+.cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-primary);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: -1;
+}
+
+.cta:hover::before,
+.cta:focus-visible::before {
+  transform: scaleX(1);
 }
 
 .cta:hover,
 .cta:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(31, 77, 61, 0.25);
+  transform: translateY(-2px) scale(1.01);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 12px 28px rgba(22, 89, 65, 0.25);
   outline: none;
 }
 
-.benefits {
+.cta-logo-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(31, 77, 61, 0.12);
+  transition: background 0.3s ease;
+}
+
+.cta:hover .cta-logo-wrapper,
+.cta:focus-visible .cta-logo-wrapper {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.cta-logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(41%) saturate(630%) hue-rotate(115deg) brightness(96%) contrast(87%);
+  transition: filter 0.3s ease;
+}
+
+.cta:hover .cta-logo,
+.cta:focus-visible .cta-logo {
+  filter: brightness(0) invert(1);
+}
+
+/* Full-width benefits under form - speech bubble style */
+.benefits-list-fullwidth {
+  list-style: none;
+  padding: 0;
+  margin: 3rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.benefits-list-fullwidth.benefits-three-col {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 960px) {
+  .benefits-list-fullwidth.benefits-three-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .benefits-list-fullwidth {
+    grid-template-columns: 1fr;
+  }
+}
+
+.benefit-item-inline {
+  position: relative;
+  padding: 1.35rem 1.65rem;
+  background: transparent;
+  border-radius: var(--radius-card);
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-primary);
+  text-align: center;
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 4px 12px rgba(31, 77, 61, 0.1);
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border 0.2s ease,
+    color 0.3s ease;
+  z-index: 0;
+}
+
+.benefit-item-inline::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 130%;
+  height: 130%;
+  top: -15%;
+  left: -15%;
+  background: var(--color-primary);
+  border-radius: calc(var(--radius-card) + 10px);
+  transform: translate(-100%, 0) rotate(48deg);
+  transform-origin: top left;
+  transition: transform 0.35s ease;
+  z-index: -1;
+}
+
+.benefit-item-inline:hover::after,
+.benefit-item-inline:focus-visible::after {
+  transform: translate(0, 0) rotate(0);
+}
+
+.benefit-item-inline:hover,
+.benefit-item-inline:focus-visible {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 24px rgba(31, 77, 61, 0.25);
+  border-color: var(--color-primary);
+  color: var(--color-surface);
+  outline: none;
+}
+
+.benefit-link {
+  cursor: pointer;
+}
+
+.benefit-link:active {
+  transform: translateY(0);
+}
+
+/* Comparison section */
+.comparison {
+  padding: 3rem 0 3rem;
+}
+
+.comparison .container {
+  padding: 0;
+}
+
+#comparison-title {
+  font-size: clamp(1.9rem, 4vw, 2.5rem);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.comparison-description {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--color-muted);
+  max-width: 60ch;
+  margin: 0 auto 1.5rem;
+  line-height: 1.6;
+}
+
+.shared-question {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-text);
+  padding: 1.25rem 2rem;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(14, 165, 233, 0.08) 100%);
+  border-radius: 16px;
+  border: 2px solid rgba(56, 189, 248, 0.3);
+  margin: 0 auto 2.5rem;
+  max-width: 70ch;
+  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.15);
+}
+
+.shared-question strong {
+  color: var(--color-primary);
+  margin-right: 0.5rem;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 960px) {
+  .comparison-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.comparison-window {
+  background: var(--color-surface);
+  border-radius: var(--radius-large);
+  padding: 2rem;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  transition:
+    box-shadow 0.25s ease,
+    border 0.25s ease,
+    transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.comparison-window:hover {
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.12);
+  border-color: rgba(15, 23, 42, 0.12);
+  transform: translateY(-2px);
+}
+
+.unverified-window {
+  border-left: 4px solid rgba(239, 68, 68, 0.4);
+}
+
+.verified-window {
+  border-left: 4px solid rgba(34, 197, 94, 0.4);
+}
+
+.comparison-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.comparison-heading {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.comparison-content {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 700px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+.comparison-content p {
+  margin: 0 0 1rem;
+}
+
+.comparison-content p:last-child {
+  margin-bottom: 0;
+}
+
+.comparison-content h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem;
+  color: var(--color-text);
+}
+
+.comparison-content h4:first-child {
+  margin-top: 0;
+}
+
+.comparison-content ul {
+  margin: 0.75rem 0;
+  padding-left: 1.75rem;
+  list-style-type: disc;
+}
+
+.comparison-content li {
+  margin: 0.5rem 0;
+  line-height: 1.65;
+}
+
+.comparison-content strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Conversation exchanges in verified response */
+.conversation-exchange {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.05);
+  border-left: 2px solid rgba(15, 23, 42, 0.2);
+  margin-bottom: 1rem;
+}
+
+.conversation-exchange:last-child {
+  margin-bottom: 0;
+}
+
+.conversation-exchange.medsense-exchange {
+  background: rgba(56, 189, 248, 0.06);
+  border-left: 2px solid rgba(56, 189, 248, 0.4);
+  padding: 1rem 1.25rem;
+}
+
+.exchange-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 0.5rem;
+}
+
+.exchange-text {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--color-text);
+}
+
+.exchange-text p {
+  margin: 0 0 0.75rem;
+}
+
+.exchange-text p:last-child {
+  margin-bottom: 0;
+}
+
+.exchange-text strong {
+  font-weight: 600;
+}
+
+.exchange-text ul {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+
+.exchange-text li {
+  margin: 0.4rem 0;
+  line-height: 1.6;
+}
+
+.source-link {
+  color: #0ea5e9;
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.3);
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+  cursor: pointer;
+}
+
+.source-link:hover {
+  color: #0284c7;
+  border-bottom-color: #0284c7;
+}
+
+/* Preview section */
+.preview-section {
   padding: 2rem 0 4rem;
 }
 
-.benefits .container {
-  padding: 2.5rem;
-}
-
-#benefits-title {
-  font-size: clamp(1.9rem, 4vw, 2.5rem);
-  margin-bottom: 1.5rem;
+.preview-section .container {
+  padding: 0;
 }
 
 .conversation-heading {
@@ -399,7 +747,9 @@ body {
 }
 
 .avatar.patient {
-  background: rgba(31, 77, 61, 0.12);
+  background: rgba(31, 77, 61, 0.18);
+  color: var(--color-primary);
+  border: 2px solid rgba(31, 77, 61, 0.25);
 }
 
 .avatar.rx {
@@ -534,72 +884,216 @@ chat-bubble.patient:focus-visible {
   color: var(--color-primary);
 }
 
-.benefits-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 3rem;
+/* Assessment option buttons */
+.assessment-options {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 0.65rem;
+  margin-top: 1rem;
 }
 
-@media (max-width: 720px) {
-  .benefits-list {
-    grid-template-columns: 1fr;
+.assessment-option {
+  padding: 0.75rem 1rem;
+  background: rgba(56, 189, 248, 0.06);
+  border: 1.5px solid rgba(56, 189, 248, 0.25);
+  border-radius: 12px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.assessment-option:hover {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateX(2px);
+}
+
+.assessment-option.selected {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: rgba(56, 189, 248, 0.5);
+  font-weight: 500;
+}
+
+.assessment-option.danger {
+  background: rgba(239, 68, 68, 0.06);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.assessment-option.danger:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.assessment-option.secondary {
+  background: rgba(100, 116, 139, 0.06);
+  border-color: rgba(100, 116, 139, 0.2);
+}
+
+.assessment-option.secondary:hover {
+  background: rgba(100, 116, 139, 0.1);
+  border-color: rgba(100, 116, 139, 0.35);
+}
+
+
+/* Connection Diagram for Pharmacies - Floating Bubbles */
+.connection-diagram {
+  padding: 2rem 0 3rem;
+}
+
+.connection-diagram .container {
+  padding: 0;
+}
+
+.diagram-container {
+  position: relative;
+  min-height: 400px;
+  padding: 1rem 2rem 2rem;
+}
+
+.bubble-diagram {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.floating-bubble {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.15),
+    0 0 0 3px rgba(255, 255, 255, 0.8),
+    inset 0 -8px 20px rgba(15, 23, 42, 0.03);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
   }
 }
 
-.benefit-item {
-  position: relative;
-  padding: 1.35rem 1.65rem;
-  background: var(--color-surface);
-  border-radius: var(--radius-card);
-  font-size: 1.05rem;
-  font-weight: 400;
-  line-height: 1.6;
+.floating-bubble:hover {
+  transform: translateY(-20px) scale(1.05);
+  box-shadow:
+    0 20px 50px rgba(15, 23, 42, 0.25),
+    0 0 0 3px rgba(255, 255, 255, 0.9),
+    inset 0 -8px 20px rgba(15, 23, 42, 0.05);
+  animation-play-state: paused;
+}
+
+.patient-bubble {
+  position: absolute;
+  left: calc(50% - 320px);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(14, 165, 233, 0.08) 100%);
+  animation-delay: 0s;
+}
+
+.pharmacy-bubble {
+  position: absolute;
+  right: calc(50% - 320px);
+  background: linear-gradient(135deg, rgba(31, 77, 61, 0.15) 0%, rgba(15, 81, 50, 0.08) 100%);
+  animation-delay: 1s;
+}
+
+.medsense-bubble {
+  width: 260px;
+  height: 260px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%);
+  box-shadow:
+    0 15px 40px rgba(31, 77, 61, 0.2),
+    0 0 0 4px var(--color-primary),
+    0 0 0 8px rgba(255, 255, 255, 0.8),
+    inset 0 -10px 25px rgba(31, 77, 61, 0.05);
+  animation-delay: 0.5s;
+  z-index: 3;
+}
+
+.bubble-content {
+  text-align: center;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.bubble-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+
+.bubble-label {
+  font-size: 1.2rem;
+  font-weight: 700;
   color: var(--color-text);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border 0.2s ease,
-    text-shadow 0.15s ease;
+  letter-spacing: 0.02em;
 }
 
-.benefit-item::before {
-  content: "";
-  position: absolute;
-  bottom: -22px;
-  left: 2rem;
-  width: 0;
-  height: 0;
-  border-left: 14px solid transparent;
-  border-right: 14px solid transparent;
-  border-top: 24px solid var(--color-surface);
-  filter: drop-shadow(0 2px 3px rgba(15, 23, 42, 0.06));
+.bubble-label-large {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-.benefit-item::after {
-  content: "";
+.bubble-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--color-muted);
+  max-width: 16ch;
+}
+
+.connection-arrows {
   position: absolute;
-  bottom: -23px;
-  left: calc(2rem + 1px);
-  width: 0;
-  height: 0;
-  border-left: 13px solid transparent;
-  border-right: 13px solid transparent;
-  border-top: 23px solid var(--color-surface);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 1;
+  pointer-events: none;
 }
 
-.benefit-item:hover,
-.benefit-item:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
-  border-color: rgba(15, 23, 42, 0.12);
-  -webkit-text-stroke: 0.4px currentColor;
-  outline: none;
+@media (max-width: 960px) {
+  .bubble-diagram {
+    flex-direction: column;
+    height: auto;
+    gap: 3rem;
+    padding: 2rem 0;
+  }
+
+  .floating-bubble {
+    width: 200px;
+    height: 200px;
+  }
+
+  .medsense-bubble {
+    width: 240px;
+    height: 240px;
+  }
+
+  .connection-arrows {
+    display: none;
+  }
 }
 
 .site-footer {
@@ -613,14 +1107,19 @@ chat-bubble.patient:focus-visible {
   justify-content: center;
 }
 
+@media (max-width: 960px) {
+  :root {
+    --container-width: calc(100% - 3rem);
+  }
+}
+
 @media (max-width: 720px) {
-  .hero {
-    padding: 3rem 0 2.5rem;
+  :root {
+    --container-width: calc(100% - 2.5rem);
   }
 
-  .hero .container,
-  .benefits .container {
-    padding: 1.75rem;
+  .hero {
+    padding: 3rem 0 2.5rem;
   }
 
   .hero-form {
@@ -634,65 +1133,6 @@ chat-bubble.patient:focus-visible {
   .benefit-item {
     padding: 1.5rem;
   }
-}
-.cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.9rem 2rem;
-  border-radius: var(--radius-pill);
-  background: var(--color-primary);
-  color: var(--color-surface);
-  text-decoration: none;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  border: none;
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.cta-logo-wrapper {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18);
-}
-
-.cta-logo {
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
-}
-
-.form-panel {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.is-hidden {
-  display: none !important;
-}
-
-.hero-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 3rem;
-  align-items: start;
-}
-
-.form-panel {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.is-hidden {
-  display: none !important;
 }
 
 .pharmacy-highlights {
@@ -776,4 +1216,8 @@ chat-bubble.patient:focus-visible {
   color: var(--color-muted);
   max-width: 40ch;
   margin: 0;
+}
+
+.is-hidden {
+  display: none !important;
 }

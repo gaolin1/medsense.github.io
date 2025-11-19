@@ -27,10 +27,40 @@ body {
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  background: var(--color-background);
+  background: linear-gradient(180deg, #f8fafc 0%, #eef4ff 45%, #ffffff 90%);
   color: var(--color-text);
   font-size: 1.0625rem;
   line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  z-index: 0;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(0px);
+  opacity: 0.5;
+  z-index: -1;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.25), transparent 70%);
+}
+
+body::before {
+  width: 520px;
+  height: 520px;
+  top: -180px;
+  right: -80px;
+}
+
+body::after {
+  width: 640px;
+  height: 640px;
+  bottom: -240px;
+  left: -140px;
+  background: radial-gradient(circle, rgba(31, 77, 61, 0.18), transparent 70%);
 }
 
 .container {
@@ -463,17 +493,44 @@ body {
 }
 
 .shared-question {
-  text-align: center;
+  text-align: left;
   font-size: 1.2rem;
   font-weight: 600;
   color: var(--color-text);
-  padding: 1.25rem 2rem;
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(14, 165, 233, 0.08) 100%);
-  border-radius: 16px;
-  border: 2px solid rgba(56, 189, 248, 0.3);
-  margin: 0 auto 2.5rem;
+  padding: 1.4rem 2.2rem;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 2px solid rgba(56, 189, 248, 0.8);
+  margin: 0 auto 4rem;
   max-width: 70ch;
+  position: relative;
   box-shadow: 0 8px 20px rgba(56, 189, 248, 0.15);
+}
+
+.shared-question::before {
+  content: "";
+  position: absolute;
+  bottom: -18px;
+  right: 60px;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid #ffffff;
+  z-index: 2;
+}
+
+.shared-question::after {
+  content: "";
+  position: absolute;
+  bottom: -22px;
+  right: 57px;
+  width: 0;
+  height: 0;
+  border-left: 23px solid transparent;
+  border-right: 23px solid transparent;
+  border-top: 23px solid rgba(56, 189, 248, 0.8);
+  z-index: 1;
 }
 
 .shared-question strong {
@@ -496,42 +553,69 @@ body {
 }
 
 .comparison-window {
-  background: var(--color-surface);
-  border-radius: var(--radius-large);
+  --comparison-accent: rgba(56, 189, 248, 0.6);
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 26px;
   padding: 2rem;
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  transition:
-    box-shadow 0.25s ease,
-    border 0.25s ease,
-    transform 0.25s ease;
+  border: 1px solid rgba(15, 23, 42, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+  transition: border 0.25s ease, transform 0.25s ease;
   display: flex;
   flex-direction: column;
 }
 
+.comparison-window::before,
+.comparison-window::after {
+  content: "";
+  position: absolute;
+  inset: 1.15rem;
+  border-radius: 18px;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  opacity: 0.85;
+}
+
+.comparison-window::before {
+  background:
+    linear-gradient(var(--comparison-accent), var(--comparison-accent)) 0 0 / 42px 2px no-repeat,
+    linear-gradient(var(--comparison-accent), var(--comparison-accent)) 0 0 / 2px 42px no-repeat,
+    linear-gradient(var(--comparison-accent), var(--comparison-accent)) 100% 0 / 42px 2px no-repeat,
+    linear-gradient(var(--comparison-accent), var(--comparison-accent)) 100% 0 / 2px 42px no-repeat;
+}
+
+.comparison-window::after {
+  background:
+    linear-gradient(var(--comparison-accent), var(--comparison-accent)) 0 100% / 42px 2px no-repeat,
+    linear-gradient(var(--comparison-accent), var(--comparison-accent)) 0 100% / 2px 42px no-repeat,
+    linear-gradient(var(--comparison-accent), var(--comparison-accent)) 100% 100% / 42px 2px no-repeat,
+    linear-gradient(var(--comparison-accent), var(--comparison-accent)) 100% 100% / 2px 42px no-repeat;
+}
+
 .comparison-window:hover {
-  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.12);
-  border-color: rgba(15, 23, 42, 0.12);
   transform: translateY(-2px);
+  border-color: rgba(56, 189, 248, 0.4);
 }
 
 .unverified-window {
-  border-left: 4px solid rgba(239, 68, 68, 0.4);
+  --comparison-accent: rgba(239, 68, 68, 0.65);
 }
 
 .verified-window {
-  border-left: 4px solid rgba(34, 197, 94, 0.4);
+  --comparison-accent: rgba(34, 197, 94, 0.65);
 }
 
 .comparison-header {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 1rem;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .comparison-heading {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   margin: 0;
   color: var(--color-text);
 }
@@ -1149,6 +1233,86 @@ chat-bubble.patient:focus-visible {
 @media (max-width: 720px) {
   .pharmacy-highlights {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  body::before {
+    width: 320px;
+    height: 320px;
+    top: -120px;
+    right: -40px;
+  }
+
+  body::after {
+    width: 360px;
+    height: 360px;
+    bottom: -160px;
+    left: -60px;
+  }
+
+  .hero {
+    padding: 2.5rem 0 2rem;
+  }
+
+  .hero .container {
+    padding: 0 1rem;
+  }
+
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero-copy-block {
+    text-align: center;
+    justify-items: center;
+  }
+
+  #hero-title {
+    max-width: 100%;
+  }
+
+  .hero-copy {
+    max-width: 100%;
+  }
+
+  .audience-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-form {
+    padding: 1.5rem;
+  }
+
+  .name-inline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+
+  .name-inline .form-logo {
+    width: 30px;
+    height: 30px;
+  }
+
+  .cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cta-logo-wrapper {
+    display: none;
+  }
+
+  .benefits-list-fullwidth {
+    margin-top: 2rem;
+    gap: 1rem;
+  }
+
+  .conversation-heading {
+    text-align: center;
   }
 }
 

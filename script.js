@@ -1,165 +1,19 @@
 (function () {
   "use strict";
 
-  const conversationPreview = {
-    patients: `
-            <div class="preview-card">
-                <div class="preview-header">
-                    <span class="preview-heading">From symptom to actions</span>
-                </div>
-                <div class="chat-thread" role="log" aria-live="polite">
-                    <div class="chat-row patient">
-                        <div class="chat-bubble patient" tabindex="0">
-                            <span class="bubble-label">You</span>
-                            <p>Hi MedSense, I have a fever and chills tonight. What can I take that is safe with my lisinopril?</p>
-                        </div>
-                        <div class="avatar patient" aria-hidden="true"><span>PT</span></div>
-                    </div>
-                    <div class="chat-row">
-                        <div class="avatar ai" aria-hidden="true"><span>AI</span></div>
-                        <div class="chat-bubble medsense" tabindex="0">
-                            <span class="bubble-label">MedSense AI</span>
-                            <p>Thanks for checking in, Alex. Because of your hypertension and lisinopril, stick with acetaminophen (Tylenol) for fever relief tonight. Follow the dose on the box and reach out if it pushes past 38.5°C or you feel worse.</p>
-                        </div>
-                    </div>
-                    <div class="chat-row">
-                        <div class="avatar ai" aria-hidden="true"><span>AI</span></div>
-                        <div class="chat-bubble medsense" tabindex="0">
-                            <span class="bubble-label">MedSense AI</span>
-                            <p>I pulled a few items you can add right now:</p>
-                            <div class="product-tiles" role="list">
-                                <div class="product-card" role="listitem" tabindex="0">
-                                    <div class="product-name">Tylenol Extra Strength</div>
-                                    <div class="product-detail">500 mg caplets · 24 count</div>
-                                    <div class="product-cta">Add to pickup</div>
-                                </div>
-                                <div class="product-card" role="listitem" tabindex="0">
-                                    <div class="product-name">Electrolyte Drink Mix</div>
-                                    <div class="product-detail">Helps with hydration during fever</div>
-                                    <div class="product-cta">Add to pickup</div>
-                                </div>
-                                <div class="product-card alt" role="listitem" tabindex="0">
-                                    <div class="product-name">Cool-Mist Humidifier</div>
-                                    <div class="product-detail">Eases congestion while you rest</div>
-                                    <div class="product-cta">Add to pickup</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-row patient">
-                        <div class="chat-bubble patient" tabindex="0">
-                            <span class="bubble-label">You</span>
-                            <p>Great, add Tylenol, the drink mix, and I need my ramipril refill too please.</p>
-                        </div>
-                        <div class="avatar patient" aria-hidden="true"><span>PT</span></div>
-                    </div>
-                    <div class="chat-row">
-                        <div class="avatar ai" aria-hidden="true"><span>AI</span></div>
-                        <div class="chat-bubble medsense" tabindex="0">
-                            <span class="bubble-label">MedSense AI</span>
-                            <p>On it. I am queueing your ramipril refill, packaging Tylenol plus the hydration bundle, and looping in your pharmacist for a quick review.</p>
-                        </div>
-                    </div>
-                    <div class="chat-row">
-                        <div class="avatar rx" aria-hidden="true"><span>RX</span></div>
-                        <div class="chat-bubble pharmacist" tabindex="0">
-                            <span class="bubble-label">MedSense Pharmacist</span>
-                            <p>Hi Alex, I confirmed your ramipril refill and the comfort items. Everything will be ready in 30 minutes; request courier if you would rather stay in.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `,
-    pharmacies: `
-            <div class="preview-card">
-                <div class="preview-header">
-                    <span class="preview-heading">Minor Ailment Assessment Hand-off</span>
-                </div>
-                <div class="chat-thread" role="log" aria-live="polite">
-                    <div class="chat-row patient">
-                        <div class="chat-bubble patient" tabindex="0">
-                            <span class="bubble-label">Patient</span>
-                            <p>Hi MedSense, I am feeling burning when I urinate and need relief tonight. Can my pharmacist prescribe something?</p>
-                        </div>
-                        <div class="avatar patient" aria-hidden="true"><span>PT</span></div>
-                    </div>
-                    <div class="chat-row">
-                        <div class="avatar ai" aria-hidden="true"><span>AI</span></div>
-                        <div class="chat-bubble medsense" tabindex="0">
-                            <span class="bubble-label">MedSense AI</span>
-                            <p>Hi Jamie, let's start with your symptoms. Which of these are you experiencing right now? Select all that apply.</p>
-                            <div class="assessment-options">
-                                <div class="assessment-option selected">Burning or pain when peeing</div>
-                                <div class="assessment-option selected">Needing to pee much more often than usual</div>
-                                <div class="assessment-option">Strong urge to pee right away</div>
-                                <div class="assessment-option danger">Blood in urine (pink, red, or cola-colored)</div>
-                                <div class="assessment-option">Pressure or discomfort just above the pubic bone</div>
-                                <div class="assessment-option secondary">None of these apply</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-row">
-                        <div class="avatar ai" aria-hidden="true"><span>AI</span></div>
-                        <div class="chat-bubble medsense" tabindex="0">
-                            <span class="bubble-label">MedSense AI</span>
-                            <p>Thanks. Are any of these complicating factors happening right now? Select all that apply—they help us decide if a pharmacist needs to step in.</p>
-                            <div class="assessment-options">
-                                <div class="assessment-option danger">Fever, chills, or feeling very unwell</div>
-                                <div class="assessment-option danger">Flank or back pain near the kidneys</div>
-                                <div class="assessment-option danger">Blood in urine</div>
-                                <div class="assessment-option danger">Vomiting or unable to keep fluids down</div>
-                                <div class="assessment-option danger">Weakened immune system (e.g., chemotherapy, transplant)</div>
-                                <div class="assessment-option danger">Currently pregnant or <6 weeks postpartum</div>
-                                <div class="assessment-option">Trouble peeing or feeling unable to empty bladder</div>
-                                <div class="assessment-option secondary selected">None of these apply</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-row">
-                        <div class="avatar ai" aria-hidden="true"><span>AI</span></div>
-                        <div class="chat-bubble medsense" tabindex="0">
-                            <span class="bubble-label">MedSense AI</span>
-                            <p>Thanks. Have you experienced any of these patterns with recent urinary tract infections? Select all that apply so we can confirm whether a pharmacist can prescribe safely.</p>
-                            <div class="assessment-options">
-                                <div class="assessment-option danger">I recently finished UTI antibiotics but symptoms never cleared</div>
-                                <div class="assessment-option danger">I've had another UTI diagnosed in the past 3 months</div>
-                                <div class="assessment-option danger">I've had 3 or more UTIs within the last 12 months</div>
-                                <div class="assessment-option danger">This episode has lasted longer than 7 days</div>
-                                <div class="assessment-option secondary selected">None of these apply</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-row">
-                        <div class="avatar ai" aria-hidden="true"><span>AI</span></div>
-                        <div class="chat-bubble medsense" tabindex="0">
-                            <span class="bubble-label">MedSense AI</span>
-                            <p>Great. I am packaging this minor-ailment assessment with your history and sending it to the pharmacist for prescribing. They will join shortly with next steps.</p>
-                        </div>
-                    </div>
-                    <div class="chat-row">
-                        <div class="avatar rx" aria-hidden="true"><span>RX</span></div>
-                        <div class="chat-bubble pharmacist" tabindex="0">
-                            <span class="bubble-label">Pharmacist</span>
-                            <p>Hi Jamie, I reviewed your answers and chart. Nitrofurantoin is ready under our minor-ailment program, and I added hydration and analgesic guidance to your inbox. Let me know if you prefer pickup or delivery.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `,
-  };
   const comparisonData = {
     question: "what are the milligrams for oxycodone e?",
     unverified: {
       title: "Unverified LLM Response",
       content: `The milligram (mg) strengths for immediate-release **oxycodone** tablets typically include:
 
-* **5 mg**
-* **10 mg**
-* **15 mg**
-* **20 mg**
-* **30 mg**
+* ==**5 mg**==
+* ==**10 mg**==
+* ==**15 mg**==
+* ==**20 mg**==
+* ==**30 mg**==
 
-The letter 'e' in your query likely refers to a specific pill imprint or manufacturer, and the actual dose is the milligram strength. The most common starting doses are **5 mg** or **10 mg**.
+The letter 'e' in your query likely refers to a specific pill imprint or manufacturer, and the actual dose is the milligram strength. The most common starting doses are ==**5 mg** or **10 mg**==.
 
 ### ⚠️ **Important Note**
 
@@ -184,12 +38,12 @@ Oxycodone is a **strong opioid analgesic** used to treat moderate to severe pain
         },
         {
           role: "medsense",
-          text: `Oxycodone ER (extended-release) tablets are available in several milligram strengths, including 10 mg, 20 mg, 40 mg, 80 mg, and 160 mg ([DailyMed](https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f06d3690-3fd4-407d-8f8d-ab0c354e61bd)).
+          text: `Oxycodone ER (extended-release) tablets are available in several milligram strengths, including ==10 mg, 20 mg, 40 mg, 80 mg, and 160 mg== ([DailyMed](https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f06d3690-3fd4-407d-8f8d-ab0c354e61bd)).
 
 **Key supporting facts directly related to the question:**
 
-• Oxycodone HCl Controlled-Release Tablets come in strengths of 10 mg, 20 mg, 40 mg, and 80 mg ([DailyMed](https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f06d3690-3fd4-407d-8f8d-ab0c354e61bd)).
-• A 160 mg tablet strength is also available, which is comparable to two 80 mg tablets when taken on an empty stomach ([DailyMed](https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f06d3690-3fd4-407d-8f8d-ab0c354e61bd)).
+• Oxycodone HCl Controlled-Release Tablets come in strengths of ==10 mg, 20 mg, 40 mg, and 80 mg== ([DailyMed](https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f06d3690-3fd4-407d-8f8d-ab0c354e61bd)).
+• A ==160 mg== tablet strength is also available, which is comparable to two 80 mg tablets when taken on an empty stomach ([DailyMed](https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f06d3690-3fd4-407d-8f8d-ab0c354e61bd)).
 
 **Brief relevant safety/clinical context:**
 
@@ -203,19 +57,19 @@ Oxycodone is a **strong opioid analgesic** used to treat moderate to severe pain
   const audienceData = {
     pharmacies: {
       heroTitle:
-        "Deliver <strong>trusted</strong> care and transform your pharmacy practice.",
+        '<span class="hero-line-static">Pharmacy care that you know is</span><span class="hero-adjective-line"><span class="hero-adjective" data-force-typing="true" data-words="trusted,reliable,verified,seamless,available"><span class="hero-adjective-wrapper"><span class="hero-adjective-sizer">available</span><span class="hero-adjective-text"></span><span class="hero-adjective-caret" aria-hidden="true"></span></span></span></span>',
       heroDescription:
         "Automatically detect expanded scope opportunities, refill requests, and consultations so staff can focus on approvals and care moments.",
       benefitsTitle: "Why pharmacies plug in MedSense",
       benefits: [
         "Booking appointments with patients naturally through conversations, powered by LLM.",
-        "AI scans for UTIs and other minor ailments, pre-assesses history, and hands ready-to-sign consults to pharmacists.",
+        "AI scans for allergic rhinitis and other minor ailments, pre-assesses history, and hands ready-to-sign consults to pharmacists.",
         "Patients receive trusted answers, refill suggestions, and OTC adds that route back to your pharmacy automatically.",
       ],
     },
     patients: {
       heroTitle:
-        "Get <strong>trusted</strong> care the moment you need them.",
+        '<span class="hero-line-static">Pharmacy care that you know is</span><span class="hero-adjective-line"><span class="hero-adjective" data-force-typing="true" data-words="trusted,reliable,verified,seamless,available"><span class="hero-adjective-wrapper"><span class="hero-adjective-sizer">available</span><span class="hero-adjective-text"></span><span class="hero-adjective-caret" aria-hidden="true"></span></span></span></span>',
       heroDescription:
         "Connect to your pharmacy team for quick guidance, refills, and pickup planning in one smooth chat.",
       benefitsTitle: "What patients love about MedSense",
@@ -228,15 +82,118 @@ Oxycodone is a **strong opioid analgesic** used to treat moderate to severe pain
   const toggleButtons = document.querySelectorAll(".toggle-button");
   const heroTitle = document.getElementById("hero-title");
   const heroDescription = document.getElementById("hero-description");
-  const conversationHeading = document.getElementById("conversation-heading");
-  const preview = document.getElementById("conversation-preview");
   const patientForm = document.getElementById("patient-form");
   const pharmacyForm = document.getElementById("pharmacy-form");
   const toggleContainer = document.querySelector(".audience-toggle");
   const toggleIndicator = document.querySelector(".toggle-indicator");
   const unverifiedContent = document.getElementById("unverified-content");
   const verifiedContent = document.getElementById("verified-content");
-  let indicatorAnimation = null;
+  const reduceMotionQuery = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  );
+  const HERO_ADJECTIVES = ["trusted", "reliable", "verified", "seamless", "available"];
+  let adjectiveTimer = null;
+
+  function stopAdjectiveLoop() {
+    if (adjectiveTimer) {
+      window.clearTimeout(adjectiveTimer);
+      adjectiveTimer = null;
+    }
+  }
+
+  function initHeroAdjectiveLoop() {
+    stopAdjectiveLoop();
+    if (!heroTitle) {
+      return;
+    }
+
+    const adjectiveElement = heroTitle.querySelector(".hero-adjective");
+    if (!adjectiveElement) {
+      return;
+    }
+    const textTarget =
+      adjectiveElement.querySelector(".hero-adjective-text") || adjectiveElement;
+    const sizerElement = adjectiveElement.querySelector(".hero-adjective-sizer");
+
+    const wordsAttr =
+      adjectiveElement.dataset.words || adjectiveElement.dataset.adjectives;
+    const words = (wordsAttr ? wordsAttr.split(",") : HERO_ADJECTIVES)
+      .map((word) => word.trim())
+      .filter(Boolean);
+    const wordList = words.length ? words : HERO_ADJECTIVES;
+
+    adjectiveElement.setAttribute("aria-live", "polite");
+    const forceTyping = adjectiveElement.dataset.forceTyping === "true";
+    const allowTyping = forceTyping || !reduceMotionQuery.matches;
+
+    if (!allowTyping || wordList.length < 2) {
+      textTarget.textContent = wordList[0];
+      adjectiveElement.classList.remove("show-caret");
+      return;
+    }
+
+    // Find the longest word and set it in the sizer to reserve width
+    const longestWord = wordList.reduce((a, b) => a.length >= b.length ? a : b, "");
+    if (sizerElement) {
+      sizerElement.textContent = longestWord;
+    }
+
+    adjectiveElement.classList.add("show-caret");
+
+    let wordIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+    const typeSpeed = Number(adjectiveElement.dataset.typeSpeed || 100);
+    const deleteSpeed = Number(adjectiveElement.dataset.deleteSpeed || 50);
+    const holdDuration = Number(adjectiveElement.dataset.holdDuration || 3000);
+    const pauseBeforeType = Number(adjectiveElement.dataset.pauseBeforeType || 400);
+
+    const tick = () => {
+      const word = wordList[wordIndex];
+
+      if (!deleting) {
+        charIndex += 1;
+        textTarget.textContent = word.slice(0, charIndex);
+
+        if (charIndex === word.length) {
+          deleting = true;
+          adjectiveTimer = window.setTimeout(tick, holdDuration);
+          return;
+        }
+
+        adjectiveTimer = window.setTimeout(tick, typeSpeed);
+        return;
+      }
+
+      if (charIndex > 0) {
+        charIndex -= 1;
+        textTarget.textContent = word.slice(0, charIndex);
+        adjectiveTimer = window.setTimeout(tick, deleteSpeed);
+        return;
+      }
+
+      // Fully deleted - move to next word
+      deleting = false;
+      wordIndex = (wordIndex + 1) % wordList.length;
+      // Brief pause with empty text and blinking cursor before typing next word
+      adjectiveTimer = window.setTimeout(tick, pauseBeforeType);
+    };
+
+    // Start empty with just the blinking cursor
+    textTarget.textContent = "";
+    charIndex = 0;
+    adjectiveTimer = window.setTimeout(tick, pauseBeforeType);
+  }
+
+  function handleMotionPreferenceChange() {
+    initHeroAdjectiveLoop();
+  }
+
+  if (typeof reduceMotionQuery.addEventListener === "function") {
+    reduceMotionQuery.addEventListener("change", handleMotionPreferenceChange);
+  } else if (typeof reduceMotionQuery.addListener === "function") {
+    reduceMotionQuery.addListener(handleMotionPreferenceChange);
+  }
 
   // Simple markdown parser for comparison content
   function parseMarkdown(text) {
@@ -244,6 +201,9 @@ Oxycodone is a **strong opioid analgesic** used to treat moderate to severe pain
 
     // Parse links [text](url)
     html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="source-link">$1</a>');
+
+    // Parse highlights ==text==
+    html = html.replace(/==([^=]+)==/g, '<mark class="highlight">$1</mark>');
 
     // Parse bold **text**
     html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
@@ -343,112 +303,11 @@ Oxycodone is a **strong opioid analgesic** used to treat moderate to severe pain
     const offsetLeft = buttonRect.left - containerRect.left - paddingLeft;
     const newWidth = buttonRect.width;
 
-    const storedWidth = parseFloat(toggleIndicator.dataset.width || "");
-    const storedTranslate = parseFloat(toggleIndicator.dataset.translate || "");
-    let previousWidth = Number.isFinite(storedWidth)
-      ? storedWidth
-      : toggleIndicator.getBoundingClientRect().width;
-    if (!previousWidth || previousWidth < 1) {
-      previousWidth = newWidth;
-    }
-
-    let previousTranslate = Number.isFinite(storedTranslate)
-      ? storedTranslate
-      : 0;
-
-    if (!Number.isFinite(previousTranslate)) {
-      previousTranslate = 0;
-    }
-
-    const currentTransform = toggleIndicator.style.transform;
-    if (!Number.isFinite(storedTranslate) && currentTransform) {
-      const match = currentTransform.match(/translateX\((-?\d+(?:\.\d+)?)px\)/);
-      if (match) {
-        previousTranslate = parseFloat(match[1]);
-      }
-    }
-
-    const applyFinalState = () => {
-      toggleIndicator.style.width = `${newWidth}px`;
-      toggleIndicator.style.transform = `translateX(${offsetLeft}px) scaleX(1) scaleY(1)`;
-      toggleIndicator.dataset.width = String(newWidth);
-      toggleIndicator.dataset.translate = String(offsetLeft);
-    };
-
     toggleIndicator.style.opacity = "1";
-    toggleIndicator.style.width = `${previousWidth}px`;
-    toggleIndicator.style.transform = `translateX(${previousTranslate}px) scaleX(1) scaleY(1)`;
-    toggleIndicator.dataset.width = String(previousWidth);
-    toggleIndicator.dataset.translate = String(previousTranslate);
-
-    if (!toggleIndicator.animate) {
-      applyFinalState();
-      return;
-    }
-
-    if (indicatorAnimation) {
-      indicatorAnimation.cancel();
-    }
-
-    const distance = Math.abs(offsetLeft - previousTranslate);
-    const midTranslate =
-      previousTranslate + (offsetLeft - previousTranslate) * 0.5;
-    const stretchWidth = Math.max(previousWidth, newWidth) + distance * 0.6;
-    const settleWidth = newWidth + 12;
-
-    indicatorAnimation = toggleIndicator.animate(
-      [
-        {
-          width: `${previousWidth}px`,
-          transform: `translateX(${previousTranslate}px) scaleX(1) scaleY(1)`,
-          offset: 0,
-        },
-        {
-          width: `${previousWidth * 0.85}px`,
-          transform: `translateX(${previousTranslate}px) scaleX(1.15) scaleY(0.85)`,
-          offset: 0.15,
-        },
-        {
-          width: `${stretchWidth}px`,
-          transform: `translateX(${midTranslate - stretchWidth * 0.15}px) scaleX(0.7) scaleY(1.35)`,
-          offset: 0.45,
-        },
-        {
-          width: `${stretchWidth * 0.9}px`,
-          transform: `translateX(${offsetLeft - newWidth * 0.1}px) scaleX(0.85) scaleY(1.2)`,
-          offset: 0.65,
-        },
-        {
-          width: `${settleWidth}px`,
-          transform: `translateX(${offsetLeft}px) scaleX(1.08) scaleY(0.92)`,
-          offset: 0.82,
-        },
-        {
-          width: `${newWidth * 0.98}px`,
-          transform: `translateX(${offsetLeft}px) scaleX(0.98) scaleY(1.02)`,
-          offset: 0.92,
-        },
-        {
-          width: `${newWidth}px`,
-          transform: `translateX(${offsetLeft}px) scaleX(1) scaleY(1)`,
-          offset: 1,
-        },
-      ],
-      {
-        duration: 650,
-        easing: "cubic-bezier(0.34, 1.56, 0.64, 1)",
-        fill: "forwards",
-      },
-    );
-
-    indicatorAnimation.onfinish = () => {
-      applyFinalState();
-      indicatorAnimation = null;
-    };
-
-    indicatorAnimation.oncancel = () => {
-      indicatorAnimation = null;
-    };
+    toggleIndicator.style.width = `${newWidth}px`;
+    toggleIndicator.style.transform = `translateX(${offsetLeft}px) scaleX(1) scaleY(1)`;
+    toggleIndicator.dataset.width = String(newWidth);
+    toggleIndicator.dataset.translate = String(offsetLeft);
   }
 
   function renderAudience(audienceKey) {
@@ -458,16 +317,10 @@ Oxycodone is a **strong opioid analgesic** used to treat moderate to severe pain
     }
 
     heroTitle.innerHTML = data.heroTitle;
-    heroDescription.textContent = data.heroDescription;
-    conversationHeading.textContent = audienceKey === "patients"
-      ? "See MedSense in action"
-      : "See how MedSense streamlines your workflow";
-
-    preview.innerHTML = conversationPreview[audienceKey] || "";
-    preview.classList.toggle(
-      "is-visible",
-      Boolean(conversationPreview[audienceKey]),
-    );
+    initHeroAdjectiveLoop();
+    if (heroDescription) {
+      heroDescription.textContent = data.heroDescription;
+    }
 
     // Update benefits in hero section
     const benefitsList = document.getElementById("benefits-list-inline");
@@ -481,43 +334,25 @@ Oxycodone is a **strong opioid analgesic** used to treat moderate to severe pain
         benefitsList.classList.remove("benefits-three-col");
       }
 
-      data.benefits.forEach((benefit, index) => {
+      data.benefits.forEach((benefit) => {
         const item = document.createElement("li");
         item.className = "benefit-item-inline benefit-link";
         item.tabIndex = 0;
         item.setAttribute("role", "button");
         item.textContent = benefit;
 
-        // Set link targets - all pharmacy benefits link to preview
-        if (audienceKey === "patients") {
-          if (index === 0) {
-            item.setAttribute("data-link-to", "comparison-section");
-          } else {
-            item.setAttribute("data-link-to", "preview-section");
-          }
-        } else {
-          item.setAttribute("data-link-to", "preview-section");
-        }
+        // Set link targets
+        item.setAttribute("data-link-to", "comparison-section");
 
         benefitsList.appendChild(item);
       });
     }
 
     // Show/hide sections based on audience
-    const comparisonSection = document.getElementById("comparison-section");
-    const connectionDiagram = document.getElementById("connection-diagram");
-    const previewSection = document.getElementById("preview-section");
-
     if (audienceKey === "patients") {
-      if (comparisonSection) comparisonSection.classList.remove("is-hidden");
-      if (connectionDiagram) connectionDiagram.classList.add("is-hidden");
-      if (previewSection) previewSection.classList.remove("is-hidden");
       patientForm.classList.remove("is-hidden");
       pharmacyForm.classList.add("is-hidden");
     } else {
-      if (comparisonSection) comparisonSection.classList.add("is-hidden");
-      if (connectionDiagram) connectionDiagram.classList.remove("is-hidden");
-      if (previewSection) previewSection.classList.remove("is-hidden");
       patientForm.classList.add("is-hidden");
       pharmacyForm.classList.remove("is-hidden");
     }
@@ -566,8 +401,30 @@ Oxycodone is a **strong opioid analgesic** used to treat moderate to severe pain
     updateToggleIndicator(activeButton);
   });
 
+  // Back to top button functionality
+  const backToTopButton = document.getElementById('back-to-top');
+
+  function handleScroll() {
+    if (window.scrollY > 300) {
+      backToTopButton.classList.add('visible');
+    } else {
+      backToTopButton.classList.remove('visible');
+    }
+  }
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  window.addEventListener('scroll', handleScroll);
+  backToTopButton.addEventListener('click', scrollToTop);
+
   // Initialize
   renderAudience("patients");
   renderComparison();
   setupBenefitLinks();
 })();
+

@@ -88,6 +88,7 @@ Oxycodone is a **strong opioid analgesic** used to treat moderate to severe pain
   const toggleIndicator = document.querySelector(".toggle-indicator");
   const unverifiedContent = document.getElementById("unverified-content");
   const verifiedContent = document.getElementById("verified-content");
+  const connectionDiagram = document.getElementById("connection-diagram");
   const reduceMotionQuery = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   );
@@ -291,6 +292,15 @@ Oxycodone is a **strong opioid analgesic** used to treat moderate to severe pain
     });
   }
 
+  // Update CTA button text based on audience
+  function updateCtaButtonText(audienceKey) {
+    const scrollToSignupButton = document.getElementById('scroll-to-signup');
+    if (scrollToSignupButton) {
+      const buttonText = audienceKey === 'pharmacies' ? 'Request demo' : 'Sign up now';
+      scrollToSignupButton.querySelector('span').textContent = buttonText;
+    }
+  }
+
   function updateToggleIndicator(activeButton) {
     if (!toggleIndicator || !toggleContainer || !activeButton) {
       return;
@@ -352,9 +362,15 @@ Oxycodone is a **strong opioid analgesic** used to treat moderate to severe pain
     if (audienceKey === "patients") {
       patientForm.classList.remove("is-hidden");
       pharmacyForm.classList.add("is-hidden");
+      if (connectionDiagram) {
+        connectionDiagram.classList.add("is-hidden");
+      }
     } else {
       patientForm.classList.add("is-hidden");
       pharmacyForm.classList.remove("is-hidden");
+      if (connectionDiagram) {
+        connectionDiagram.classList.remove("is-hidden");
+      }
     }
 
     toggleButtons.forEach((button) => {
@@ -373,6 +389,9 @@ Oxycodone is a **strong opioid analgesic** used to treat moderate to severe pain
 
     // Re-setup benefit links after re-rendering
     setupBenefitLinks();
+
+    // Update CTA button text based on audience
+    updateCtaButtonText(audienceKey);
   }
 
   toggleButtons.forEach((button) => {
@@ -419,8 +438,21 @@ Oxycodone is a **strong opioid analgesic** used to treat moderate to severe pain
     });
   }
 
-  window.addEventListener('scroll', handleScroll);
-  backToTopButton.addEventListener('click', scrollToTop);
+  if (backToTopButton) {
+    window.addEventListener('scroll', handleScroll);
+    backToTopButton.addEventListener('click', scrollToTop);
+  }
+
+  // Scroll to signup button functionality
+  const scrollToSignupButton = document.getElementById('scroll-to-signup');
+  if (scrollToSignupButton) {
+    scrollToSignupButton.addEventListener('click', () => {
+      const heroSection = document.getElementById('hero');
+      if (heroSection) {
+        heroSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
 
   // Initialize
   renderAudience("patients");

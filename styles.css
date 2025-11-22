@@ -376,6 +376,12 @@ body::after {
    background: var(--color-text);
    margin-left: 1px;
    vertical-align: text-bottom;
+   opacity: 0;
+   animation: none;
+ }
+
+ .hero-adjective.show-caret .hero-adjective-caret {
+   opacity: 1;
    animation: breathe 1s ease-in-out infinite;
  }
 
@@ -1822,5 +1828,40 @@ chat-bubble.patient:focus-visible {
   .back-to-top svg {
     width: 20px;
     height: 20px;
+  }
+}
+
+/* CTA Section at end of page */
+.cta-section {
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.cta-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.cta-heading {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.cta-scroll-top {
+  font-size: 1.125rem;
+  padding: 1rem 2.5rem;
+}
+
+@media (max-width: 720px) {
+  .cta-section {
+    padding: 3rem 0;
+  }
+
+  .cta-heading {
+    font-size: 1.5rem;
   }
 }

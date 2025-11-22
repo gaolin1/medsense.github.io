@@ -454,6 +454,47 @@ Oxycodone is a **strong opioid analgesic** used to treat moderate to severe pain
     });
   }
 
+  // Email validation for both forms
+  function validateEmail(email) {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+  }
+
+  function setupEmailValidation(inputId, errorId) {
+    const input = document.getElementById(inputId);
+    const error = document.getElementById(errorId);
+    if (!input || !error) return;
+
+    function checkEmail() {
+      const value = input.value.trim();
+      if (value && !validateEmail(value)) {
+        error.textContent = 'Please enter a valid email address.';
+        return false;
+      } else {
+        error.textContent = '';
+        return true;
+      }
+    }
+
+    input.addEventListener('blur', checkEmail);
+    input.addEventListener('input', function() {
+      if (error.textContent) checkEmail();
+    });
+
+    // Validate on form submit
+    const form = input.closest('form');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        if (!checkEmail()) {
+          e.preventDefault();
+        }
+      });
+    }
+  }
+
+  setupEmailValidation('email', 'email-error');
+  setupEmailValidation('pharmacy-email', 'pharmacy-email-error');
+
   // Initialize
   renderAudience("patients");
   renderComparison();

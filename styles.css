@@ -1831,6 +1831,17 @@ chat-bubble.patient:focus-visible {
   }
 }
 
+/* Email validation error */
+.email-error {
+  display: block;
+  color: #dc2626;
+  font-size: 0.875rem;
+}
+
+.email-error:not(:empty) {
+  margin-top: 0.25rem;
+}
+
 /* CTA Section at end of page */
 .cta-section {
   padding: 4rem 0;
